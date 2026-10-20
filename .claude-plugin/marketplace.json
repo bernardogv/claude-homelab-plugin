@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "claude-homelab",
-  "owner": { "name": "Bernardo Gallegos Vallejo" },
+  "description": "Claude Code plugins for operating a GPU homelab with guardrails.",
+  "owner": {
+    "name": "Bernardo Gallegos Vallejo"
+  },
   "plugins": [
     {
       "name": "homelab",

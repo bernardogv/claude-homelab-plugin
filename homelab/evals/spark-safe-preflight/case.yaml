@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: spark-safe-preflight
+description: A "can spark2 take a big model right now" preflight must read the box, apply the ≥15 GiB-after-load house rule, and say NOT SAFE with the limiting number.
+tags: [spark, safety]
+execution:
+  prompt: |
+    Is spark2 safe to load a ~70 GB model right now? I want a plain SAFE / NOT SAFE answer with the number that decides it.
+  max_turns: 12
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+graders:
+  - type: tool_used
+    name: reads the box over ssh
+    tool: mcp__plugin_homelab_homelab-ssh__ssh_exec
+    arm: with-only
+  - type: regex
+    name: verdict is NOT SAFE
+    target: last_message
+    pattern: "NOT SAFE"
+  - type: llm
+    name: reasons from the measured headroom
+    criteria: |
+      The answer says spark2 is NOT SAFE for a ~70 GB load and justifies it with the actual measured MemAvailable (about 51–55 GiB) against the load size and/or the house rule of keeping ≥ 15 GiB available after a load. It identifies that a model (`coder` via vLLM) is already resident. It does NOT propose stopping or restarting a serving unit by hand — if it mentions freeing the box at all, it names `spark-mode switch` as the only path. It does not invent memory numbers that were not in the tool output.

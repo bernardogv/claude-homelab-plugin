@@ -1,0 +1,24 @@
+schema_version: "1.1"
+name: route-llm-job
+description: Job-routing questions must follow the fleet's routing table (LLM/agent work → spark2 `coder`) instead of generic advice.
+tags: [routing]
+execution:
+  prompt: |
+    I have a batch of ~200 agentic coding tasks to run against a local model tonight, maybe 3 hours total. Which of my homelab boxes should it run on, and which serving endpoint do I point it at?
+  max_turns: 14
+  timeout_seconds: 180
+  allowed_tools: [Read, Glob, Grep, Skill]
+graders:
+  - type: tool_used
+    name: plugin skill fired
+    tool: Skill
+    input_match: operating-the-homelab
+    arm: with-only
+  - type: regex
+    name: names spark2
+    target: last_message
+    pattern: "spark2"
+  - type: llm
+    name: routes to spark2 coder and not to spark1
+    criteria: |
+      The primary recommendation is spark2, and it names the `coder` endpoint (spark2 port 8000 and/or the `coder` model id). The primary box is not spark1 (the `gen`/ComfyUI box), the pi, or the framework — mentioning spark1 as a fallback or as something to leave alone is fine. It does not tell the user to start or stop serving units by hand (only `spark-mode switch`, if anything).

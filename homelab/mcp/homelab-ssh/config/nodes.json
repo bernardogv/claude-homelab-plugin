@@ -1,0 +1,81 @@
+{
+  "nodes": {
+    "spark": {
+      "sshAlias": "spark",
+      "role": "GPU/ML",
+      "ip": "100.64.0.11",
+      "hardware": {
+        "cores": 20,
+        "ram": "119GB",
+        "arch": "ARM64",
+        "special": "NVIDIA GB10 GPU"
+      }
+    },
+    "spark2": {
+      "sshAlias": "spark2",
+      "role": "GPU/ML",
+      "ip": "100.64.0.12",
+      "hardware": {
+        "cores": 20,
+        "ram": "121GB",
+        "arch": "ARM64",
+        "special": "NVIDIA GB10 GPU (second DGX Spark); same GB10 UMA/OOM rules as spark"
+      }
+    },
+    "pi": {
+      "sshAlias": "pi",
+      "role": "Monitoring",
+      "ip": "100.64.0.13",
+      "hardware": {
+        "cores": 4,
+        "ram": "8GB",
+        "arch": "ARM",
+        "special": "Raspberry Pi"
+      }
+    },
+    "framework": {
+      "sshAlias": "framework",
+      "role": "Docker",
+      "ip": "100.64.0.14",
+      "hardware": {
+        "cores": 16,
+        "ram": "30GB",
+        "arch": "x86_64",
+        "special": "Framework laptop"
+      }
+    },
+    "mac-mini": {
+      "sshAlias": "mac-mini",
+      "role": "macOS",
+      "ip": "100.64.0.15",
+      "hardware": {
+        "cores": 10,
+        "ram": "16GB",
+        "arch": "ARM64",
+        "special": "Apple M4; GitHub Actions self-hosted runner + Claude Code orchestration"
+      }
+    },
+    "nas": {
+      "sshAlias": "nas",
+      "role": "NAS/Storage",
+      "ip": "100.64.0.16",
+      "hardware": {
+        "cores": 5,
+        "ram": "8GB",
+        "arch": "x86_64",
+        "special": "UGREEN DXP4800 Plus (UGOS Pro); SSH tailnet-only"
+      }
+    },
+    "strix": {
+      "sshAlias": "strix",
+      "role": "GPU/ML (AMD)",
+      "ip": "100.64.0.17",
+      "hardware": {
+        "cores": 16,
+        "ram": "122GB",
+        "arch": "x86_64",
+        "special": "Framework Desktop, Ryzen AI Max+ 395, Radeon 8060S gfx1151 (RDNA 3.5), 128GB unified (VRAM 512MiB + GTT 120GiB via ttm.pages_limit). NOT the Framework laptop (that is `framework`)"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "homelab",
+  "version": "0.1.10",
+  "description": "Operate the homelab fleet (spark/spark2/strix/pi/framework/mac-mini/nas) \u2014 SSH tools, on-demand operating knowledge, GPU/OOM safety, audit guard, and the route to the Spark casebook (single source of truth for local-model benchmarks and serving).",
+  "author": {
+    "name": "Bernardo Gallegos Vallejo"
+  }
+}

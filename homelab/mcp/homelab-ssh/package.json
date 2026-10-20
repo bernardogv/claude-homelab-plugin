@@ -1,0 +1,30 @@
+{
+  "name": "homelab-ssh-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "bundle/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "tsx --test tests/*.test.ts",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --format=esm --outfile=bundle/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "strip-ansi": "^7.2.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

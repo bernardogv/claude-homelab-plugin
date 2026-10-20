@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "claude-homelab",
+  "owner": { "name": "Bernardo Gallegos Vallejo" },
+  "plugins": [
+    {
+      "name": "homelab",
+      "source": "./homelab",
+      "description": "Operate a GPU homelab from Claude Code: SSH MCP server with guardrails, fleet skill, operator subagent, audit hook, and eval suites."
+    }
+  ]
+}

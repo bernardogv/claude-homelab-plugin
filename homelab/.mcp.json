@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "homelab-ssh": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/homelab-ssh/bundle/index.js"]
+    }
+  }
+}

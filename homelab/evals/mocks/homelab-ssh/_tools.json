@@ -1,0 +1,274 @@
+{
+ "tools": [
+  {
+   "name": "ssh_exec",
+   "description": "Execute a command on a homelab node via SSH. Returns structured output with exit code and duration.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "command": {
+      "type": "string",
+      "description": "Command to execute on the remote node"
+     },
+     "timeout": {
+      "default": 60,
+      "description": "Timeout in seconds (max 300)",
+      "type": "number"
+     }
+    },
+    "required": [
+     "node",
+     "command"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "list_nodes",
+   "description": "List all configured homelab nodes with their roles, IPs, and hardware specs. No SSH connection required.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {}
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "node_status",
+   "description": "Check health of homelab nodes. Returns uptime, load, memory, disk usage. Includes GPU stats for spark.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "default": "all",
+      "description": "Node to check, or \"all\" for all nodes",
+      "type": "string",
+      "enum": [
+       "all",
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ]
+     }
+    }
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "file_read",
+   "description": "Read a file from a homelab node. Supports offset for reading specific sections of large files.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "path": {
+      "type": "string",
+      "description": "Absolute path to the file on the remote node"
+     },
+     "max_lines": {
+      "default": 500,
+      "description": "Maximum lines to read",
+      "type": "number"
+     },
+     "start_line": {
+      "default": 1,
+      "description": "Line number to start reading from (1-based)",
+      "type": "number"
+     }
+    },
+    "required": [
+     "node",
+     "path"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "file_write",
+   "description": "Write content to a file on a homelab node. Only paths under /home/bernardogv/ and /tmp/ are allowed.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "path": {
+      "type": "string",
+      "description": "Absolute path on the remote node"
+     },
+     "content": {
+      "type": "string",
+      "description": "File content to write"
+     },
+     "mode": {
+      "description": "File permissions (e.g., \"755\")",
+      "type": "string"
+     }
+    },
+    "required": [
+     "node",
+     "path",
+     "content"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "file_download",
+   "description": "Download a file from a URL to a homelab node. Wraps curl. Only paths under /home/bernardogv/ and /tmp/ are allowed.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "url": {
+      "type": "string",
+      "description": "URL to download from"
+     },
+     "dest_path": {
+      "type": "string",
+      "description": "Absolute destination path on the remote node"
+     }
+    },
+    "required": [
+     "node",
+     "url",
+     "dest_path"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "ssh_tail",
+   "description": "Read the last N lines of a file on a homelab node. Useful for logs and monitoring output.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "path": {
+      "type": "string",
+      "description": "Absolute path to the file on the remote node"
+     },
+     "lines": {
+      "default": 50,
+      "description": "Number of lines from the end to read",
+      "type": "number"
+     }
+    },
+    "required": [
+     "node",
+     "path"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  },
+  {
+   "name": "node_processes",
+   "description": "List top processes on a homelab node sorted by memory usage. Optional filter to search for specific processes.",
+   "inputSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+     "node": {
+      "type": "string",
+      "enum": [
+       "spark",
+       "spark2",
+       "pi",
+       "framework",
+       "mac-mini",
+       "nas"
+      ],
+      "description": "Target homelab node"
+     },
+     "filter": {
+      "description": "Filter processes by name (case-insensitive grep)",
+      "type": "string"
+     }
+    },
+    "required": [
+     "node"
+    ]
+   },
+   "execution": {
+    "taskSupport": "forbidden"
+   }
+  }
+ ]
+}
